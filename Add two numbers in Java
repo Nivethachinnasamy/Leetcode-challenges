@@ -1,0 +1,52 @@
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // create a dummy head node to store the result
+        ListNode dummyHead = new ListNode(0);
+        // create a pointer to iterate over the dummy head node
+        ListNode p = dummyHead;
+        // carry to store the carry bit
+        int carry = 0;
+        
+        // while both l1 and l2 are not null
+        while (l1 != null && l2 != null) {
+            // add the values of l1 and l2 along with the carry
+            int sum = l1.val + l2.val + carry;
+            // update carry
+            carry = sum / 10;
+            // create a new node with the last digit of the sum and point the pointer to it
+            p.next = new ListNode(sum % 10);
+            // move both l1 and l2 to the next node
+            l1 = l1.next;
+            l2 = l2.next;
+            // move pointer to the next node
+            p = p.next;
+        }
+        
+        // if l1 is not null, add the remaining nodes of l1 to the result
+        while (l1 != null) {
+            int sum = l1.val + carry;
+            carry = sum / 10;
+            p.next = new ListNode(sum % 10);
+            l1 = l1.next;
+            p = p.next;
+        }
+        
+        // if l2 is not null, add the remaining nodes of l2 to the result
+        while (l2 != null) {
+            int sum = l2.val + carry;
+            carry = sum / 10;
+            p.next = new ListNode(sum % 10);
+            l2 = l2.next;
+            p = p.next;
+        }
+        
+        // if carry is not zero, add a new node with carry as the value
+        if (carry != 0) {
+            p.next = new ListNode(carry);
+        }
+        
+        // return the next node of the dummy head node as the result
+        // since the dummy head node is not part of the result
+        return dummyHead.next;
+    }
+}
